@@ -10,7 +10,7 @@ st.markdown("A visualizer for disk scheduling algorithms")
 st.sidebar.header("Configuration")
 request_input = st.sidebar.text_input("Disk Requests (comma separated)", "98, 183, 37, 122, 14, 124, 65, 67")
 initial_head = st.sidebar.number_input("Initial Head Position", min_value=0, value=50 )
-max_cylinder = st.sidebar.number_input("Maximum Cylinder Number", min_value=1, value=200)
+max_cylinder = st.sidebar.number_input("Maximum Sequence Number", min_value=1, value=200)
 
 algorithm = st.sidebar.selectbox("Algorithm", ["FCFS", "SJF", "SSTF", "SCAN", "C-SCAN"])
 direction = st.sidebar.selectbox("Direction (for SCAN/C-SCAN)", ["Up", "Down"])
@@ -49,4 +49,41 @@ col2.metric("Average Seek Time", f"{avg_seek_time:.2f}")
 col3.metric("Throughput", f"{throughput:.2f} req/time")
 
 st.subheader("Head Movement Visualization")
-
+steps = list(range(len(sequence)))
+fig = go.Figure()
+fig.add_trace(go.Scatter(
+    x = sequence,
+    y = steps,
+    mode = 'lines+markers+text',
+    line=dict(color='#6366f1',width=3),
+    marker = dict(size=12,color='#ec4899',line=dict(width=2,color='white')),
+    text = [str(val) for val in sequence],
+    textposition ="top center",
+    hoverinfo='text',
+    hovertext=[f"Step{i}: cylinder{val}" for i,val in enumerate(sequence)]
+))
+fig.update_layout(
+    xaxis = dict(
+        title="Track/Cylinder Number",
+        range=[-5, max_cylinder + 5],
+        tickmode='linear',
+        tick0=0,
+        dtick=max(1, max_cylinder // 20),
+        gridcolor='rgba(255, 255, 255, 0.1)',
+        showgrid=True,
+    ),
+    yaxis=dict(
+        title="Time(Steps)",
+        autorange="reversed",
+        showgrid=False,
+        zeroline=False,
+        showticklabels=False,
+    ),
+    height=600,
+    margin=dict(l=40,r=40,t=40,b=40),
+    hovermode='closest',
+)
+st.plotly_chart(fig, use_container_width=True)
+st.subheader("Request Sequence Table")
+seq_df=pd.DataFrame({"Step":steps,"Cylinder":sequence})
+st.dataframe(seq_df.set_index("Step").T)

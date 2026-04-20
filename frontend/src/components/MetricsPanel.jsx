@@ -20,7 +20,7 @@ function AnimatedNumber({ value, decimals = 0, duration = 600 }) {
 
     raf.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(raf.current);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [value, duration]);
 
   return <>{decimals > 0 ? display.toFixed(decimals) : Math.round(display)}</>;

@@ -16,7 +16,6 @@ export default function ConfigPanel({ onSimulate }) {
     e.preventDefault();
     setError('');
 
-    // parse requests
     const parts = requestInput.split(',').map((s) => s.trim()).filter(Boolean);
     const parsed = parts.map(Number);
 

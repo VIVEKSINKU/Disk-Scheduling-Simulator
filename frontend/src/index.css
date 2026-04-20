@@ -1,10 +1,5 @@
-/* ═══════════════════════════════════════════════════
-   Disk Scheduling Simulator — Design System
-   ═══════════════════════════════════════════════════ */
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-/* ── tokens ── */
 :root {
   --bg-primary: #0a0e1a;
   --bg-secondary: #111827;
@@ -71,13 +66,16 @@ body {
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: rgba(99, 102, 241, 0.3);
   border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(99, 102, 241, 0.5);
 }
@@ -233,7 +231,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent);
   opacity: 0;
   transition: opacity var(--transition-fast);
 }
@@ -291,10 +289,12 @@ body {
   background: var(--accent-indigo);
   box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
 }
+
 .metric-card:nth-child(2)::before {
   background: var(--accent-pink);
   box-shadow: 0 0 20px rgba(236, 72, 153, 0.4);
 }
+
 .metric-card:nth-child(3)::before {
   background: var(--accent-cyan);
   box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
@@ -316,9 +316,17 @@ body {
   line-height: 1;
 }
 
-.metric-card:nth-child(1) .metric-value { color: var(--accent-indigo); }
-.metric-card:nth-child(2) .metric-value { color: var(--accent-pink); }
-.metric-card:nth-child(3) .metric-value { color: var(--accent-cyan); }
+.metric-card:nth-child(1) .metric-value {
+  color: var(--accent-indigo);
+}
+
+.metric-card:nth-child(2) .metric-value {
+  color: var(--accent-pink);
+}
+
+.metric-card:nth-child(3) .metric-value {
+  color: var(--accent-cyan);
+}
 
 .metric-unit {
   font-size: 0.75rem;
@@ -350,8 +358,17 @@ body {
 }
 
 @keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(0.8); }
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(0.8);
+  }
 }
 
 .chart-wrapper {
@@ -480,17 +497,32 @@ body {
 
 /* ── animations ── */
 @keyframes fade-in {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-in {
   animation: fade-in 0.5s var(--transition-base) both;
 }
 
-.animate-in:nth-child(2) { animation-delay: 0.08s; }
-.animate-in:nth-child(3) { animation-delay: 0.16s; }
-.animate-in:nth-child(4) { animation-delay: 0.24s; }
+.animate-in:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.animate-in:nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+.animate-in:nth-child(4) {
+  animation-delay: 0.24s;
+}
 
 /* ── direction toggle visibility ── */
 .direction-group {

@@ -1,10 +1,3 @@
-/**
- * Disk Scheduling Algorithms — pure JavaScript implementation
- * (mirrors the C implementation in c_algo/disk_scheduling.c)
- *
- * Each function returns { sequence: number[], totalDistance: number }
- */
-
 export function fcfs(requests, initialHead) {
   const sequence = [initialHead];
   let distance = 0;
@@ -73,7 +66,6 @@ export function scan(requests, initialHead, maxCylinder, direction = 'Up') {
     }
   }
 
-  // deduplicate consecutive
   const clean = [sequence[0]];
   for (let i = 1; i < sequence.length; i++) {
     if (sequence[i] !== clean[clean.length - 1]) clean.push(sequence[i]);
@@ -114,9 +106,6 @@ export function cscan(requests, initialHead, maxCylinder, direction = 'Up') {
   return { sequence: clean, totalDistance: distance };
 }
 
-/**
- * Run a named algorithm
- */
 export function runAlgorithm(name, requests, initialHead, maxCylinder, direction) {
   switch (name) {
     case 'FCFS':

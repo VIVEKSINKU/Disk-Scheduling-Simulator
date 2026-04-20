@@ -1,17 +1,7 @@
-/*
- * Disk Scheduling Algorithms in C
- * Implements: FCFS, SSTF, SCAN, C-SCAN
- *
- * Compile (native):  gcc -O2 -o disk_sched disk_scheduling.c -lm
- * Run:               ./disk_sched
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include "disk_scheduling.h"
-
-/* ───────── helpers ───────── */
 
 static int int_abs(int x) { return x < 0 ? -x : x; }
 
@@ -19,7 +9,7 @@ static int cmp_asc(const void *a, const void *b) {
     return (*(const int *)a) - (*(const int *)b);
 }
 
-/* ───────── FCFS ───────── */
+// FCFS
 
 SchedulingResult fcfs(const int *requests, int count, int initial_head) {
     SchedulingResult r;
@@ -37,7 +27,7 @@ SchedulingResult fcfs(const int *requests, int count, int initial_head) {
     return r;
 }
 
-/* ───────── SSTF ───────── */
+// SSTF
 
 SchedulingResult sstf(const int *requests, int count, int initial_head) {
     SchedulingResult r;
@@ -72,7 +62,7 @@ SchedulingResult sstf(const int *requests, int count, int initial_head) {
     return r;
 }
 
-/* ───────── SCAN (elevator) ───────── */
+// SCAN
 
 SchedulingResult scan(const int *requests, int count, int initial_head,
                       int max_cylinder, int direction) {
@@ -84,7 +74,6 @@ SchedulingResult scan(const int *requests, int count, int initial_head,
     for (int i = 0; i < count; i++) sorted[i] = requests[i];
     qsort(sorted, count, sizeof(int), cmp_asc);
 
-    /* split into left / right of head */
     int left[MAX_REQUESTS], left_n = 0;
     int right[MAX_REQUESTS], right_n = 0;
     for (int i = 0; i < count; i++) {
@@ -92,7 +81,6 @@ SchedulingResult scan(const int *requests, int count, int initial_head,
         else                          right[right_n++] = sorted[i];
     }
 
-    /* build path array */
     int path[MAX_REQUESTS * 2 + 4], path_n = 0;
 
     if (direction) { /* Up */
@@ -105,7 +93,6 @@ SchedulingResult scan(const int *requests, int count, int initial_head,
         for (int i = 0; i < right_n; i++) path[path_n++] = right[i];
     }
 
-    /* walk the path */
     int current = initial_head;
     r.sequence[r.seq_len++] = current;
     for (int i = 0; i < path_n; i++) {
@@ -115,8 +102,6 @@ SchedulingResult scan(const int *requests, int count, int initial_head,
             r.sequence[r.seq_len++] = current;
         }
     }
-
-    /* deduplicate consecutive duplicates */
     int clean[MAX_REQUESTS * 2 + 4], clean_n = 0;
     clean[clean_n++] = r.sequence[0];
     for (int i = 1; i < r.seq_len; i++) {
@@ -129,7 +114,7 @@ SchedulingResult scan(const int *requests, int count, int initial_head,
     return r;
 }
 
-/* ───────── C-SCAN ───────── */
+// C-SCAN
 
 SchedulingResult cscan(const int *requests, int count, int initial_head,
                        int max_cylinder, int direction) {
@@ -184,7 +169,7 @@ SchedulingResult cscan(const int *requests, int count, int initial_head,
     return r;
 }
 
-/* ───────── CLI test harness ───────── */
+// CLI test harness
 
 #ifndef __EMSCRIPTEN__
 static void print_result(const char *name, SchedulingResult *res) {

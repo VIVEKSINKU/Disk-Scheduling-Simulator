@@ -1,4 +1,4 @@
-# 💽 Disk Scheduling Simulator
+# Disk Scheduling Simulator
 
 A visual simulator for disk scheduling algorithms built with **C** (algorithm engine) and **React** (interactive UI). Compare how different scheduling strategies affect seek time, throughput, and head movement patterns.
 
